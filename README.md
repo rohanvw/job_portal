@@ -130,7 +130,7 @@ job_portal/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/job-portal.git
+git clone https://github.com/rohanvw/job_portal.git
 
 # Navigate to project
 cd job-portal
