@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}My Applications - Job Portal{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h3 class="fw-bold text-dark mb-1"><i class="fa-solid fa-paper-plane me-2 text-primary"></i> My Applications</h3>
+    <p class="text-muted small mb-0">Track all job positions you have applied for.</p>
+</div>
+
+{% if applications %}
+    <div class="row g-4">
+        {% for app in applications %}
+            <div class="col-md-6 col-lg-4">
+                <div class="job-card h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill fw-semibold">
+                            <i class="fa-solid fa-check-circle me-1"></i> Application Submitted
+                        </span>
+                        <small class="text-muted"><i class="fa-regular fa-calendar me-1"></i>{{ app.date_applied|date:"M d, Y" }}</small>
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">{{ app.job.title }}</h5>
+                    <p class="text-muted small mb-3"><i class="fa-solid fa-building me-1 text-primary"></i> {{ app.job.company_name }}</p>
+
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <span class="job-badge-meta">
+                            <i class="fa-solid fa-location-dot me-1 text-danger"></i> {{ app.job.location }}
+                        </span>
+                        <span class="salary-tag">
+                            <i class="fa-solid fa-indian-rupee-sign me-1"></i> ₹{{ app.job.salary|floatformat:0 }}
+                        </span>
+                    </div>
+
+                    <div class="mt-auto pt-3 border-top text-end">
+                        <a href="{% url 'job_detail' app.job.pk %}" class="btn btn-outline-custom btn-sm">
+                            View Job Listing <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card form-card text-center py-5 shadow-sm">
+        <div class="my-3">
+            <div class="brand-icon mx-auto mb-3" style="width:60px; height:60px; font-size:1.75rem;">
+                <i class="fa-solid fa-inbox"></i>
+            </div>
+            <h4 class="fw-bold text-dark">No applications submitted yet</h4>
+            <p class="text-muted mb-4">Browse active job opportunities and click "Apply Now" to get started.</p>
+            <a href="{% url 'job_list' %}" class="btn btn-primary-custom">
+                <i class="fa-solid fa-compass me-1"></i> Browse Jobs
+            </a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

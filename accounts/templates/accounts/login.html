@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Log In - Job Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+        <div class="form-card mt-3">
+            <div class="form-card-header text-center pb-3">
+                <div class="brand-icon mx-auto mb-3" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark">Welcome Back</h3>
+                <p class="text-muted small mb-0">Sign in to your Job Portal account</p>
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger small p-2 mb-3">
+                        {{ form.non_field_errors|striptags }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="invalid-feedback d-block mt-1">
+                                {{ field.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary-custom w-100 py-2.5 mt-3">
+                    <i class="fa-solid fa-right-to-bracket me-1"></i> Log In
+                </button>
+            </form>
+
+            <hr class="my-4">
+
+            <p class="text-center text-muted small mb-0">
+                Don't have an account? <a href="{% url 'signup' %}" class="fw-bold text-primary text-decoration-none">Sign Up</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('form input').forEach(el => {
+        el.classList.add('form-control');
+    });
+</script>
+{% endblock %}

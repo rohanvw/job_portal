@@ -1,0 +1,26 @@
+1. create virtual environment
+   python -m venv env_jobportal
+
+2. activate virtual environment
+   env_jobportal\Scripts\activate
+
+3. install django
+   pip install django
+
+4. create project
+   django-admin startproject job_portal .
+
+5. create app
+   python manage.py startapp accounts
+
+   python manage.py startapp jobs
+
+6. run migrations
+   python manage.py makemigrations 
+   python manage.py migrate
+
+7. create superuser
+   python manage.py createsuperuser
+8. run server
+   python manage.py runserver
+9. register app in settings.py

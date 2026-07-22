@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}My Posted Jobs - Job Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+    <div>
+        <h3 class="fw-bold text-dark mb-1"><i class="fa-solid fa-folder-open me-2 text-primary"></i> My Posted Jobs</h3>
+        <p class="text-muted small mb-0">Manage your published job listings and track applications.</p>
+    </div>
+    <a href="{% url 'job_create' %}" class="btn btn-primary-custom">
+        <i class="fa-solid fa-plus-circle me-1"></i> Post a Job
+    </a>
+</div>
+
+{% if jobs %}
+    <div class="table-custom shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Salary</th>
+                        <th>Date Posted</th>
+                        <th>Applications</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'job_detail' job.pk %}" class="fw-bold text-decoration-none text-dark">
+                                    {{ job.title }}
+                                </a>
+                            </td>
+                            <td>{{ job.company_name }}</td>
+                            <td><i class="fa-solid fa-location-dot me-1 text-danger small"></i>{{ job.location }}</td>
+                            <td class="fw-bold text-success"><i class="fa-solid fa-indian-rupee-sign me-1"></i>₹{{ job.salary|floatformat:0 }}</td>
+                            <td class="small text-muted">{{ job.date_posted|date:"M d, Y" }}</td>
+                            <td>
+                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 rounded-2">
+                                    <i class="fa-solid fa-users me-1"></i>{{ job.application_set.count }} applicant(s)
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'job_detail' job.pk %}" class="btn btn-outline-custom" title="View Details">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'job_update' job.pk %}" class="btn btn-outline-custom" title="Edit">
+                                        <i class="fa-solid fa-pen-to-square text-secondary"></i>
+                                    </a>
+                                    <a href="{% url 'job_delete' job.pk %}" class="btn btn-outline-custom text-danger" title="Delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% else %}
+    <div class="card form-card text-center py-5 shadow-sm">
+        <div class="my-3">
+            <div class="brand-icon mx-auto mb-3" style="width:60px; height:60px; font-size:1.75rem;">
+                <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <h4 class="fw-bold text-dark">No jobs posted yet</h4>
+            <p class="text-muted mb-4">Create a job listing to start receiving applications from potential candidates.</p>
+            <a href="{% url 'job_create' %}" class="btn btn-primary-custom">
+                <i class="fa-solid fa-plus-circle me-1"></i> Post Your First Job
+            </a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

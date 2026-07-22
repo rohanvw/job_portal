@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Edit Job{% else %}Post a New Job{% endif %} - Job Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="form-card">
+            <div class="form-card-header">
+                <h3 class="fw-bold mb-1 text-dark">
+                    <i class="fa-solid {% if object %}fa-pen-to-square{% else %}fa-plus-circle{% endif %} text-primary me-2"></i>
+                    {% if object %}Edit Job Listing{% else %}Create a Job Listing{% endif %}
+                </h3>
+                <p class="text-muted small mb-0">Fill in the details to publish your job position to active candidates.</p>
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="invalid-feedback d-block mt-1">
+                                {{ field.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                    <a href="{% if object %}{% url 'job_detail' object.pk %}{% else %}{% url 'my_jobs' %}{% endif %}" class="btn btn-outline-custom">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary-custom px-4">
+                        <i class="fa-solid fa-check me-1"></i> {% if object %}Save Changes{% else %}Publish Job{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
