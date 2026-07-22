@@ -133,7 +133,7 @@ job_portal/
 git clone https://github.com/rohanvw/job_portal.git
 
 # Navigate to project
-cd job-portal
+cd job_portal
 
 # Create virtual environment
 python -m venv env
